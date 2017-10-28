@@ -154,7 +154,7 @@ continue_or_abort(){
 #继续or中止
 	echo ${separated};echo -n "继续(y)还是中止(n)? [y/n]:";read continue_or_stop
 	if [ ${continue_or_stop} = 'y' ];then
-		bash v3.sh
+		bash nginx.sh
 	fi
 }
 
