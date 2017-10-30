@@ -8,7 +8,7 @@
 ---
 1.执行
 ```
-wget "https://raw.githubusercontent.com/qinghuas/Nginx-administration-script/master/nginx.sh"
+wget "https://raw.githubusercontent.com/qinghuas/Nginx-administration-script/master/nginx.sh";bash nginx.sh
 ```
 若提示：`-bash: wget: command not found`，则
 Centos：`yum -y install wget`
