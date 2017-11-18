@@ -1,4 +1,4 @@
-# Nginx administration script
+# Nginx Admin Script
 
 简介
 ---
