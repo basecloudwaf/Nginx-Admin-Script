@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#Color
 Warning='\033[31m[WARNING]\033[0m'
 Tips='\033[32m[Tips]\033[0m'
 
@@ -37,16 +38,16 @@ Lnmp_Vhost_Add(){
 	lnmp vhost add
 	#Check_SSL_WWW_A
 	if [ ! -f /etc/letsencrypt/live/${WWW_A}/fullchain.pem ];then
-		echo -e "${Warning} 域名[${WWW_A}]仍然缺少SSL证书,您需手动配置SSL.";exit 0
+		echo -e "${Warning} 域名[${WWW_A}]仍然缺少SSL证书,您需手动配置SSL."
 	else
 		echo -e "${Tips} [Let's Encrypt]已为[${WWW_A}]签发[SSL]证书."
 	fi
 	#Check_SSL_WWW_B
-	if [ ! -f /etc/letsencrypt/live/${WWW_B}/fullchain.pem ];then
-		echo -e "${Warning} 域名[${WWW_B}]仍然缺少SSL证书,您需手动配置SSL.";exit 0
-	else
-		echo -e "${Tips} [Let's Encrypt]已为[${WWW_B}]签发[SSL]证书."
-	fi
+	#if [ ! -f /etc/letsencrypt/live/${WWW_B}/fullchain.pem ];then
+		#echo -e "${Warning} 域名[${WWW_B}]仍然缺少SSL证书,您需手动配置SSL."
+	#else
+		#echo -e "${Tips} [Let's Encrypt]已为[${WWW_B}]签发[SSL]证书."
+	#fi
 }
 
 Check_Domain_Name(){
@@ -57,11 +58,11 @@ Check_Domain_Name(){
 		echo;echo -e "${Tips} 域名[${WWW_A}]的[SSL]证书存在."
 	fi
 	#Check_SSL_WWW_B
-	if [ ! -f /etc/letsencrypt/live/${WWW_B}/fullchain.pem ];then
-		echo;echo -e "${Warning} 域名[${WWW_B}]的[SSL]证书不存在.";Lnmp_Vhost_Add
-	else
-		echo;echo -e "${Tips} 域名[${WWW_B}]的[SSL]证书存在."
-	fi
+	#if [ ! -f /etc/letsencrypt/live/${WWW_B}/fullchain.pem ];then
+		#echo;echo -e "${Warning} 域名[${WWW_B}]的[SSL]证书不存在.";Lnmp_Vhost_Add
+	#else
+		#echo;echo -e "${Tips} 域名[${WWW_B}]的[SSL]证书存在."
+	#fi
 	#Check_Domain_IP
 	Server_IP=`curl -s https://app.52ll.win/ip/api.php`
 	#https://zhidao.baidu.com/question/327919479.html
@@ -178,7 +179,7 @@ Add_Access_phpmyadmin_Folder(){
         #listen [::]:80;
         server_name ${WWW_A} ;
         index index.html index.htm index.php default.html default.htm default.php;
-        root  /home/wwwroot/default/phpmyadmin;
+        root  ${phpmyadmin_Path};
 
         include none.conf;
         #error_page   404   /404.html;
@@ -209,19 +210,18 @@ Add_Access_phpmyadmin_Folder(){
 
         access_log off;
     }
-}" > /usr/local/nginx/conf/vhost/${WWW_A}.conf
-	sed -i "7c         root  ${phpmyadmin_Path};" /usr/local/nginx/conf/vhost/${WWW_A}.conf
+" > /usr/local/nginx/conf/vhost/${WWW_A}.conf
 }
 
 Access_phpmyadmin_Folder(){
 	echo -e "${Tips} 效果:访问 a.com = 访问本机phpmyadmin目录"
 	read -p "请输入访问域名:" WWW_A
-	echo;echo "phpmyadmin目录绝对路径示例/默认值:/home/wwwroot/default/phpmyadmin"
+	echo;echo -e "${Tips} phpmyadmin目录绝对路径示例/默认值:/home/wwwroot/default/phpmyadmin"
 	read -p "请输入phpmyadmin目录绝对路径:" phpmyadmin_Path
 	
 	if [[ ${phpmyadmin_Path} = '' ]];then
 		phpmyadmin_Path='/home/wwwroot/default/phpmyadmin'
-		echo "未输入任何内容,默认phpmyadmin目录绝对路径为:/home/wwwroot/default/phpmyadmin"
+		echo;echo -e "${Tips} 未输入任何内容,默认phpmyadmin目录绝对路径为:/home/wwwroot/default/phpmyadmin";echo
 	fi
 	
 	Add_Access_phpmyadmin_Folder
