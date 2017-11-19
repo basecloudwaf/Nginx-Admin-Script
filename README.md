@@ -17,3 +17,9 @@ Debian/Ubuntu：`apt-get -y install wget`
 2.选择   
    
 ![](https://raw.githubusercontent.com/qinghuas/Nginx-Admin-Script/master/V.1.3.png)
+
+其他
+---
+```
+cp /root/nas.sh /usr/bin/nas;chmod 777 /usr/bin/nas;nas
+```
