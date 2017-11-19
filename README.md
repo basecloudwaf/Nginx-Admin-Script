@@ -14,5 +14,6 @@ wget "https://raw.githubusercontent.com/qinghuas/Nginx-administration-script/mas
 Centos：`yum -y install wget`
 Debian/Ubuntu：`apt-get -y install wget`  
 
-2.选择  
+2.选择   
+   
 ![](https://raw.githubusercontent.com/qinghuas/Nginx-Admin-Script/master/V.1.3.png)
