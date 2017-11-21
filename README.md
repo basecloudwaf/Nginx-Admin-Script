@@ -7,6 +7,7 @@
 使用
 ---
 1.环境  
+
 Centos:`yum -y install git wget curl zip unzip screen`  
 
 Debian/Ubuntu:`apt-get -y install git wget curl zip unzip screen`
@@ -15,9 +16,6 @@ Debian/Ubuntu:`apt-get -y install git wget curl zip unzip screen`
 ```
 wget "https://raw.githubusercontent.com/qinghuas/Nginx-administration-script/master/nas.sh";bash nas.sh
 ```
-若提示：`-bash: wget: command not found`，则
-Centos：`yum -y install wget`
-Debian/Ubuntu：`apt-get -y install wget`  
 
 3.选择   
    
