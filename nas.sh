@@ -10,14 +10,19 @@ Install_Nginx(){
 			case "${Installation_Qualification}" in
 			y)
 				if [ ! -f /root/lnmp1.4/install.sh ];then
-					wget -c "http://soft.vpser.net/lnmp/lnmp1.4.tar.gz"
-					tar zxf lnmp1.4.tar.gz
+					wget -c "http://soft.vpser.net/lnmp/lnmp1.4.tar.gz";tar zxf lnmp1.4.tar.gz
+					apt-get install -y git;yum install -y git
+					git clone https://github.com/yaoweibin/ngx_http_substitutions_filter_module.git
+					sed -i "4c Nginx_Modules_Options='--add-module=/root/ngx_http_substitutions_filter_module'" /root/lnmp1.4/lnmp.conf
 				fi
 				cd /root/lnmp1.4
 				./install.sh nginx
 				cd /root
 				#lnmp
+				apt-get install -y net-tools;yum install -y net-tools
 				wget -P /usr/bin "https://file.52ll.win/lnmp";chmod 777 /usr/bin/lnmp;lnmp nginx
+				#nginx -V
+				nginx -V
 			;;
 			n)
 				echo "安装被取消.";exit 0
@@ -27,7 +32,9 @@ Install_Nginx(){
 			;;
 			esac
 	else
-		echo -e "${Tips} Nginx已安装.";exit 0
+		echo -e "${Tips} Nginx已安装."
+		lnmp nginx restart > /dev/null
+		echo -e "${Tips} Nginx已重启."
 	fi
 }
 
@@ -164,8 +171,8 @@ Add_Anti_Generation(){
 
 Anti_Generation(){
 	echo -e "${Tips} 效果:访问 a.com 浏览的内容来自 b.com"
-	read -p "请输入访问域名:" WWW_A
 	read -p "请输入源站域名:" WWW_B
+	read -p "请输入访问域名:" WWW_A
 	Check_Domain_Name
 	Add_Anti_Generation
 	lnmp nginx restart > /dev/null
@@ -406,7 +413,7 @@ Delete_The_Initial_Configuration(){
 	read -p "请输入删除域名:" WWW_A
 	
 	rm -rf /usr/local/nginx/conf/vhost/${WWW_A}.conf
-	chattr -i /home/wwwroot/${WWW_A}/.user.ini
+	chattr -i /home/wwwroot/${WWW_A}/.user.ini > /dev/null
 	rm -rf /home/wwwroot/${WWW_A}
 	
 	read -p "删除由[Let's Encrypt]签发的[SSL]证书?[y/n]" Delete_SSL
