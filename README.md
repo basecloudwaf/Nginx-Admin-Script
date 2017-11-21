@@ -6,7 +6,11 @@
 
 使用
 ---
-1.执行
+1.环境
+Centos:`yum -y install git wget curl zip unzip screen`
+Debian/Ubuntu:`apt-get -y install git wget curl zip unzip screen`
+
+2.执行
 ```
 wget "https://raw.githubusercontent.com/qinghuas/Nginx-administration-script/master/nas.sh";bash nas.sh
 ```
@@ -14,7 +18,7 @@ wget "https://raw.githubusercontent.com/qinghuas/Nginx-administration-script/mas
 Centos：`yum -y install wget`
 Debian/Ubuntu：`apt-get -y install wget`  
 
-2.选择   
+3.选择   
    
 ![](https://raw.githubusercontent.com/qinghuas/Nginx-Admin-Script/master/V.1.3.png)
 
