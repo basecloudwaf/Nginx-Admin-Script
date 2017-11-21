@@ -6,8 +6,9 @@
 
 使用
 ---
-1.环境
+1.环境  
 Centos:`yum -y install git wget curl zip unzip screen`  
+
 Debian/Ubuntu:`apt-get -y install git wget curl zip unzip screen`
 
 2.执行
