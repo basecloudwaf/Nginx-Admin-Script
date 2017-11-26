@@ -1,7 +1,4 @@
 # Nginx Admin Script
-
-简介
----
 便于生成和管理Nginx配置，Nginx的安装与lnmp命令由`lnmp.org`提供，脚本默认启用SSL，SSL证书由`Let's Encrypt`签发
 
 使用
@@ -26,3 +23,8 @@ nas
 截图
 ---
 ![](https://raw.githubusercontent.com/qinghuas/Nginx-Admin-Script/master/V.1.3.png)
+
+其他
+---
+- 脚本暂时不支持自定义证书路径
+- 默认编译了`ngx_http_substitutions_filter_module`模块
