@@ -10,20 +10,15 @@
 
 Centos:
 ```
-yum -y install git wget curl zip unzip screen
+yum -y install git wget curl zip unzip screen;wget "https://raw.githubusercontent.com/qinghuas/Nginx-administration-script/master/nas.sh";bash nas.sh
 ```
 
 Debian/Ubuntu:
 ```
-apt-get -y install git wget curl zip unzip screen
+apt-get -y install git wget curl zip unzip screen;wget "https://raw.githubusercontent.com/qinghuas/Nginx-administration-script/master/nas.sh";bash nas.sh
 ```
 
-2.执行
-```
-wget "https://raw.githubusercontent.com/qinghuas/Nginx-administration-script/master/nas.sh";bash nas.sh
-```
-
-3.选择   
+2.选择   
    
 ![](https://raw.githubusercontent.com/qinghuas/Nginx-Admin-Script/master/V.1.3.png)
 
