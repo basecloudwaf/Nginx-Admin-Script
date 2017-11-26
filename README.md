@@ -16,11 +16,11 @@ Debian/Ubuntu:
 apt-get -y install git wget curl zip unzip screen;wget "https://raw.githubusercontent.com/qinghuas/Nginx-administration-script/master/nas.sh";bash nas.sh
 ```
 
-选择   
-   
+截图
+---
 ![](https://raw.githubusercontent.com/qinghuas/Nginx-Admin-Script/master/V.1.3.png)
 
-其他
+作为系统命令
 ---
 ```
 cp /root/nas.sh /usr/bin/nas;chmod 777 /usr/bin/nas;nas
