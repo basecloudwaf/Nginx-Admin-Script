@@ -2,7 +2,7 @@
 
 简介
 ---
-便于生成和管理Nginx配置，Nginx的安装与lnmp命令由`lnmp.org`提供，脚本默认启用SSL，SSL证书由`Let's Encrypt`签发。
+便于生成和管理Nginx配置，Nginx的安装与lnmp命令由`lnmp.org`提供，脚本默认启用SSL，SSL证书由`Let's Encrypt`签发
 
 使用
 ---
