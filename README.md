@@ -7,6 +7,7 @@
 使用
 ---
 首先：   
+
 Centos:
 ```
 yum -y install git wget curl zip unzip screen;wget -O /usr/bin/nas "https://raw.githubusercontent.com/qinghuas/Nginx-administration-script/master/nas.sh";chmod 777 /usr/bin/nas
@@ -17,7 +18,10 @@ Debian/Ubuntu:
 apt-get -y install git wget curl zip unzip screen;wget -O /usr/bin/nas "https://raw.githubusercontent.com/qinghuas/Nginx-administration-script/master/nas.sh";chmod 777 /usr/bin/nas
 ```
 
-然后：`nas`
+然后：   
+```
+nas
+```
 
 截图
 ---
