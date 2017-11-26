@@ -8,20 +8,16 @@
 ---
 Centos:
 ```
-yum -y install git wget curl zip unzip screen;wget "https://raw.githubusercontent.com/qinghuas/Nginx-administration-script/master/nas.sh";bash nas.sh
+yum -y install git wget curl zip unzip screen;wget -O /usr/bin/nas "https://raw.githubusercontent.com/qinghuas/Nginx-administration-script/master/nas.sh";chmod 777 /usr/bin/nas;nas
 ```
 
 Debian/Ubuntu:
 ```
-apt-get -y install git wget curl zip unzip screen;wget "https://raw.githubusercontent.com/qinghuas/Nginx-administration-script/master/nas.sh";bash nas.sh
+apt-get -y install git wget curl zip unzip screen;wget -O /usr/bin/nas "https://raw.githubusercontent.com/qinghuas/Nginx-administration-script/master/nas.sh";chmod 777 /usr/bin/nas;nas
 ```
+
+管理命令：`nas`
 
 截图
 ---
 ![](https://raw.githubusercontent.com/qinghuas/Nginx-Admin-Script/master/V.1.3.png)
-
-作为系统命令
----
-```
-cp /root/nas.sh /usr/bin/nas;chmod 777 /usr/bin/nas;nas
-```
