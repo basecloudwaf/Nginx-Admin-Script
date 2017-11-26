@@ -6,8 +6,6 @@
 
 使用
 ---
-1.环境  
-
 Centos:
 ```
 yum -y install git wget curl zip unzip screen;wget "https://raw.githubusercontent.com/qinghuas/Nginx-administration-script/master/nas.sh";bash nas.sh
@@ -18,7 +16,7 @@ Debian/Ubuntu:
 apt-get -y install git wget curl zip unzip screen;wget "https://raw.githubusercontent.com/qinghuas/Nginx-administration-script/master/nas.sh";bash nas.sh
 ```
 
-2.选择   
+选择   
    
 ![](https://raw.githubusercontent.com/qinghuas/Nginx-Admin-Script/master/V.1.3.png)
 
