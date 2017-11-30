@@ -13,7 +13,7 @@ Install_Nginx(){
 					wget -c "http://soft.vpser.net/lnmp/lnmp1.4.tar.gz";tar zxf lnmp1.4.tar.gz
 					apt-get install -y git gcc;yum install -y git gcc
 					git clone https://github.com/yaoweibin/ngx_http_substitutions_filter_module.git
-					sed -i "4c Nginx_Modules_Options='--add-module=/root/ngx_http_substitutions_filter_module'" /root/lnmp1.4/lnmp.conf
+					sed -i "4c Nginx_Modules_Options='--with-http_addition_module --add-module=/root/ngx_http_substitutions_filter_module'" /root/lnmp1.4/lnmp.conf
 				fi
 				cd /root/lnmp1.4
 				./install.sh nginx
