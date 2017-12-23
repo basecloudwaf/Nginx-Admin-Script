@@ -2,7 +2,28 @@
 
 #Color
 Warning='\033[31m[WARNING]\033[0m'
-Tips='\033[32m[Tips]\033[0m'
+Tips='\033[32m[TIPS]\033[0m'
+Note='\033[33m[NOTE]\033[0m'
+
+Pack='git wget zip unzip gcc curl screen net-tools lrzsz'
+
+CHECK_OS(){
+	if [[ -f /etc/redhat-release ]];then
+		release="centos"
+	elif cat /etc/issue | grep -q -E -i "debian";then
+		release="debian"
+	elif cat /etc/issue | grep -q -E -i "ubuntu";then
+		release="ubuntu"
+	elif cat /etc/issue | grep -q -E -i "centos|red hat|redhat";then
+		release="centos"
+	elif cat /proc/version | grep -q -E -i "debian";then
+		release="debian"
+	elif cat /proc/version | grep -q -E -i "ubuntu";then
+		release="ubuntu"
+	elif cat /proc/version | grep -q -E -i "centos|red hat|redhat";then
+		release="centos"
+	fi
+}
 
 Install_Nginx(){
 	if [ ! -f /usr/bin/nginx ];then
@@ -10,25 +31,31 @@ Install_Nginx(){
 			case "${Installation_Qualification}" in
 			y)
 				if [ ! -f /root/lnmp1.4/install.sh ];then
+					CHECK_OS
+					case "${release}" in
+						centos)
+						yum install -y ${Pack};;
+						*)
+						apt-get install -y ${Pack};;
+					esac
+					#DownLoad
 					wget -c "http://soft.vpser.net/lnmp/lnmp1.4.tar.gz";tar zxf lnmp1.4.tar.gz
-					apt-get install -y git gcc;yum install -y git gcc
-					git clone https://github.com/yaoweibin/ngx_http_substitutions_filter_module.git
+					git clone "https://github.com/yaoweibin/ngx_http_substitutions_filter_module.git"
 					sed -i "4c Nginx_Modules_Options='--with-http_addition_module --add-module=/root/ngx_http_substitutions_filter_module'" /root/lnmp1.4/lnmp.conf
+					#Install
+					cd /root/lnmp1.4
+					./install.sh nginx
+					cd /root
+					#Done
+					wget -P /usr/bin "https://file.52ll.win/lnmp"
+					chmod 777 /usr/bin/lnmp;nginx -V
 				fi
-				cd /root/lnmp1.4
-				./install.sh nginx
-				cd /root
-				#lnmp
-				apt-get install -y net-tools;yum install -y net-tools
-				wget -P /usr/bin "https://file.52ll.win/lnmp";chmod 777 /usr/bin/lnmp;lnmp nginx
-				#nginx -V
-				nginx -V
 			;;
 			n)
-				echo "安装被取消.";exit 0
+				echo "安装被取消.";exit
 			;;
 			*)
-				echo "选项不在范围内.";exit 0
+				echo "选项不在范围内.";exit
 			;;
 			esac
 	else
@@ -115,7 +142,7 @@ Jump_Configuration(){
 	Check_Domain_Name
 	Add_Jump_Configuration
 	lnmp nginx restart > /dev/null
-	echo -e "${Tips} 已完成该项操作."
+	echo;echo -e "${Tips} 已完成该项操作."
 }
 
 Add_Anti_Generation(){
@@ -176,7 +203,7 @@ Anti_Generation(){
 	Check_Domain_Name
 	Add_Anti_Generation
 	lnmp nginx restart > /dev/null
-	echo -e "${Tips} 已完成该项操作."
+	echo;echo -e "${Tips} 已完成该项操作."
 }
 
 Add_Access_phpmyadmin_Folder(){
@@ -233,7 +260,7 @@ Access_phpmyadmin_Folder(){
 	
 	Add_Access_phpmyadmin_Folder
 	lnmp nginx restart > /dev/null
-	echo -e "${Tips} 已完成该项操作."
+	echo;echo -e "${Tips} 已完成该项操作."
 }
 
 Add_Http_Jump_Https(){
@@ -304,7 +331,7 @@ Http_Jump_Https(){
 	Check_Domain_Name
 	Add_Http_Jump_Https
 	lnmp nginx restart > /dev/null
-	echo -e "${Tips} 已完成该项操作."
+	echo;echo -e "${Tips} 已完成该项操作."
 }
 
 Add_Resume_Initial_Configuration(){
@@ -404,42 +431,102 @@ Resume_Initial_Configuration(){
 	Check_Domain_Name
 	Add_Resume_Initial_Configuration
 	lnmp nginx restart > /dev/null
-	echo -e "${Tips} 已完成该项操作."
+	echo;echo -e "${Tips} 已完成该项操作."
 }
 
-Delete_The_Initial_Configuration(){
-	echo -e "${Tips} 效果:删除 conf 文件 删除 /home/wwwroot/ 下对应目录"
+DELETE_DOMAIN_NAME_CONFIG(){
+	echo -e "${Tips} 效果:删除.conf配置文件,以及对于目录"
 	echo;lnmp vhost list;echo
-	read -p "请输入删除域名:" WWW_A
+	read -p "请输入需执行删除操作的域名:" WWW_A
 	
-	rm -rf /usr/local/nginx/conf/vhost/${WWW_A}.conf
-	chattr -i /home/wwwroot/${WWW_A}/.user.ini > /dev/null
-	rm -rf /home/wwwroot/${WWW_A}
+	echo
 	
-	read -p "删除由[Let's Encrypt]签发的[SSL]证书?[y/n]" Delete_SSL
-	case "${Delete_SSL}" in
-	y)
-		rm -rf /etc/letsencrypt/live/${WWW_A}
-		echo -e "${Warning} 不保留由[Let's Encrypt]签发的[SSL]证书";;
-	n)
-		echo -e "${Tips} 保留由[Let's Encrypt]签发的[SSL]证书";;
-	*)
-		echo -e "${Tips} 未选择选项,保留由[Let's Encrypt]签发的[SSL]证书";;
-	esac
-
+	#DELETE .conf
+	if [ -f /usr/local/nginx/conf/vhost/${WWW_A}.conf ];then
+		rm -rf /usr/local/nginx/conf/vhost/${WWW_A}.conf
+		echo -e "${Note} 删除文件:/usr/local/nginx/conf/vhost/${WWW_A}.conf"
+	fi
+	
+	#DELETE DIRECTORY
+	if [ -d /home/wwwroot/${WWW_A} ];then
+		#DELETE .user.ini
+		if [ -f /home/wwwroot/${WWW_A}/.user.ini ];then
+			chattr -i /home/wwwroot/${WWW_A}/.user.ini
+			rm -rf /home/wwwroot/${WWW_A}/.user.ini
+			echo -e "${Note} 删除文件:/home/wwwroot/${WWW_A}/.user.ini"
+		fi
+		#DELETE DIRECTORY
+		rm -rf /home/wwwroot/${WWW_A}
+		echo -e "${Note} 删除目录:/home/wwwroot/${WWW_A}"
+	else
+		#DELETE SPECIFIED DIRECTORY
+		echo -e "${Warning} 该域名配置默认目录:/home/wwwroot/${WWW_A} 不存在."
+		read -p "请指定该域名配置默认目录(例:/home/a.com),或键入[n]跳过:" SPECIFIED_DIRECTORY
+		case "${SPECIFIED_DIRECTORY}" in
+			n)
+			echo "跳过.";;
+			*)
+			if [ -d ${SPECIFIED_DIRECTORY} ];then
+				#DELETE .user.ini
+				if [ -f ${SPECIFIED_DIRECTORY}/.user.ini ];then
+					chattr -i ${SPECIFIED_DIRECTORY}/.user.ini
+					rm -rf ${SPECIFIED_DIRECTORY}/.user.ini
+					echo -e "${Note} 删除文件:${SPECIFIED_DIRECTORY}/.user.ini"
+				fi
+				#DELETE SPECIFIED DIRECTORY
+				rm -rf ${SPECIFIED_DIRECTORY}
+				echo -e "${Note} 删除目录:${SPECIFIED_DIRECTORY}"
+			else
+				echo -e "${Warning} 指定目录仍不存在,跳过."
+			fi
+			;;
+		esac
+	fi
+	
+	#DELETE SSL CERTIFICATE
+	if [ -d /etc/letsencrypt/live/${WWW_A} ];then
+		read -p "删除 ${WWW_A} 的SSL证书?[y/n]:" DELETE_THE_CERTIFICATE
+		case "${DELETE_THE_CERTIFICATE}" in
+			y)
+			rm -rf /etc/letsencrypt/live/${WWW_A}
+			echo -e "${Note} 删除目录:/etc/letsencrypt/live/${WWW_A}";;
+			*)
+			echo "跳过.";;
+		esac
+	fi
+	
 	lnmp nginx restart > /dev/null
-	echo -e "${Tips} 已完成该项操作."
+	echo;echo -e "${Tips} 已完成该项操作."
+}
+
+ADD_SKIP_SPECIFIED_URL(){
+	echo "server
+    {
+		listen 80;
+		server_name ${WWW_A};
+		return 301 ${WWW_B};
+	}" > /usr/local/nginx/conf/vhost/${WWW_A}.conf
+}
+
+SKIP_SPECIFIED_URL(){
+	echo -e "${Tips} 效果:访问 http://a.com 将跳转至 指定URL ,即301临时重定向"
+	read -p "请输入访问域名:" WWW_A
+	read -p "请指定跳转URL(需含http://或https://):" WWW_B
+	ADD_SKIP_SPECIFIED_URL
+	lnmp nginx restart > /dev/null
+	echo;echo -e "${Tips} 已完成该项操作."
 }
 
 clear;echo "##################################################
 # https://github.com/qinghuas/Nginx-Admin-Script #
-# @qinghua V.1.3 2017-11-19                      #
+# @qinghua V.1.4 2017-12-24                      #
 ##################################################
 #[1] 安装Nginx                                   #
 #[2] 生成跳转配置                                #
 #[3] 生成反代配置                                #
 #[4] 生成访问phpmyadmin配置                      #
 #[5] 生成http访问跳转https配置                   #
+#[6] 生成域名访问跳转指定URL配置                 #
 ##################################################
 #[a] 新加初始配置                                #
 #[b] 恢复初始配置                                #
@@ -458,12 +545,16 @@ case "${Select_Options}" in
 	Access_phpmyadmin_Folder;;
 	5)
 	Http_Jump_Https;;
+	6)
+	SKIP_SPECIFIED_URL;;
 	a)
 	lnmp vhost add;;
 	b)
 	Resume_Initial_Configuration;;
 	c)
-	Delete_The_Initial_Configuration;;
+	DELETE_DOMAIN_NAME_CONFIG;;
 	*)
-	echo "选项不在范围内.";exit 0;;
+	echo "选项不在范围内.";exit;;
 esac
+
+#END
