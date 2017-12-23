@@ -15,15 +15,21 @@ apt-get -y install git wget curl zip unzip screen
 安装
 ---
 ```
-wget -O /usr/bin/nas "https://raw.githubusercontent.com/qinghuas/Nginx-administration-script/master/nas.sh";chmod 777 /usr/bin/nas
-```
-```
+wget -O /usr/bin/nas "https://raw.githubusercontent.com/qinghuas/Nginx-administration-script/master/nas.sh"
+chmod 777 /usr/bin/nas
 nas
 ```
 
 快捷选项
 ---
 暂无
+
+更新日志
+---
+`2017-12-24`  
+- 添加选项:生成域名访问跳转指定URL配置
+- 优化选项:删除初始配置
+- 优化选项:安装Nginx
 
 选项预览
 ---
