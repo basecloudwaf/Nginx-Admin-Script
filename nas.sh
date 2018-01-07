@@ -186,6 +186,11 @@ Add_Anti_Generation(){
 		location / {
 		sub_filter ${WWW_B} ${WWW_A};
 		sub_filter_once off;
+		
+		#You can refer to http://www.liuzhixiang.com/2014/12/19/Nginx-ngx_http_substitutions_filter_module/
+		#subs_filter st(\d*).example.com $1.example.com ir;
+		#subs_filter a.example.com s.example.com;
+		
 		proxy_set_header X-Real-IP $remote_addr;
 		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 		proxy_set_header Referer https://${WWW_B};
@@ -519,7 +524,7 @@ SKIP_SPECIFIED_URL(){
 
 clear;echo "##################################################
 # https://github.com/qinghuas/Nginx-Admin-Script #
-# @qinghua V.1.4 2017-12-24                      #
+# @qinghua V.1.4.1 2018-01-07                    #
 ##################################################
 #[1] 安装Nginx                                   #
 #[2] 生成跳转配置                                #
